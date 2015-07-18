@@ -7,12 +7,9 @@ public class ObjectGrabber : MonoBehaviour {
 	/// Creates a dictionary of units for each team and makes the dictionaries available for copy.
 	/// </summary>
 
-	Dictionary<string, UnitData> whiteUnitDic = new Dictionary<string, UnitData>();
-	Dictionary<string, UnitData> blackUnitDic = new Dictionary<string, UnitData>();
-	Dictionary<string, Vector3> spotVectDic = new Dictionary<string, Vector3>();
-
-	public int unitCache;
-	public int spotCache;
+	public static Dictionary<string, UnitData> whiteUnitDic = new Dictionary<string, UnitData>();
+	public static Dictionary<string, UnitData> blackUnitDic = new Dictionary<string, UnitData>();
+	public static Dictionary<string, Vector3> spotVectDic = new Dictionary<string, Vector3>();
 
 	void Start () {
 	
@@ -23,7 +20,15 @@ public class ObjectGrabber : MonoBehaviour {
 	}
 
 	void SpotGrabber(){
+		GameObject[] tempSpot = GameObject.FindGameObjectsWithTag("TouchSpots");
+		
+		
+		for(int i = 0; i < tempSpot.Length; i++){
+			string tempID = tempSpot[i].transform.name + i;
+			Vector3 tempVec = tempSpot[i].transform.position;
 
+			spotVectDic.Add(tempID, tempVec);
+		}
 	}
 
 	void UnitGrabber(){
@@ -32,14 +37,12 @@ public class ObjectGrabber : MonoBehaviour {
 
 		for(int i = 0; i < tempUnit.Length; i++){
 
-			UnitData tempData;
+
 			string tempID = tempUnit[i].transform.name + i;
-			tempData.unitID = tempID;
 			Transform unitParent = tempUnit[i].GetComponentInParent<Transform>();
 			string tempSide = unitParent.transform.name;
-			tempData.unitSide = tempSide;
 			Vector3 tempVec = tempUnit[i].transform.position;
-			tempData.unitPos = tempVec;
+			UnitData tempData = new UnitData(tempID, tempSide, false, tempVec);
 			if(tempSide == "White"){
 				whiteUnitDic.Add(tempID, tempData);
 			}
