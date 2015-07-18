@@ -41,7 +41,7 @@ public class ObjectGrabber : MonoBehaviour {
 			Vector3 tempVec = tempUnit[i].transform.position;
 			tempData.unitPos = tempVec;
 			if(tempSide == "White"){
-				whiteUnitDic.Add(tempID, tempData)
+				whiteUnitDic.Add(tempID, tempData);
 			}
 			else if(tempSide == "Black"){
 				blackUnitDic.Add(tempID, tempData);
